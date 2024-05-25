@@ -1,39 +1,90 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# FitTribe API
 
-Welcome,
+Developer : Radleigh Smith
 
-This is the Code Institute student template for Codeanywhere. If you are using Gitpod then you need [this template](https://github.com/Code-Institute-Org/gitpod-full-template) instead.  We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+Opening Paragraph here
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Codeanywhere and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **August 30th, 2023**
+Live links: 
 
-## Codeanywhere Reminders
+- Live Site Link here
 
-To run a frontend (HTML, CSS, Javascript only) application in Codeanywhere, in the terminal, type:
+- Live API Site Link here
 
-`python3 -m http.server`
+- Frontend Repo Link here
 
-A button should appear to click: _Open Preview_ or _Open Browser_.
+## Contents
+1. [**Planning**](#planning)
+    * [API Aims](#api-aims)
+    * [User Stories](#user-stories)
+    * [Database Schema](#database-schema)
+    * [Agile Development](#agile-development)
 
-To run a frontend (HTML, CSS, Javascript only) application in Codeanywhere with no-cache, you can use this alias for `python3 -m http.server`.
+1. [**Features**](#features)
+    * [Current Features](#current-features)
+        * [Security](#security)
+        * [MODELS GO HERE](#modles-go-here)
+    * [Future Features](#future-features)   
 
-`http_server`
+1. [Languages](#languages)
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+1. [Frameworks and Libraries](#frameworks-and-libraries)
 
-A button should appear to click: _Open Preview_ or _Open Browser_.
+1. [Tools and Technologies](#tools-and-technologies)
 
-In Codeanywhere you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+1. [Testing & Validation](#testing--validation)
 
-To log into the Heroku toolbelt CLI:
+1. [Deployment](#deployment)
 
-1. Log in to your Heroku account and go to _Account Settings_ in the menu under your avatar.
-2. Scroll down to the _API Key_ and click _Reveal_
-3. Copy the key
-4. In Codeanywhere, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+1. [Cloning this Repository](#cloning-this-repository)
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+1. [Forking a Branch](#forking-a-branch)
+
+1. [Connecting to this API](#connecting-to-this-api)
+
+1. [Credits](#credits)
+
+1. [Achnowledgements](#acknowledgements)
+
 
 ---
+## Planning
 
-Happy coding!
+### API Aims:
+
+### User Stories:
+
+### Database Schema:
+
+### Agile Development:
+
+## Features
+
+### Current Features
+
+#### **Security**
+
+#### **MODLES GO HERE**
+
+### Future Features
+
+### Languages
+
+### Frameworks and Libraries
+
+### Tools and Technologies
+
+### Testing & Validation
+
+### Bugs & Fixes
+
+### Deployment
+
+### Cloning this Repository
+
+### Forking a Branch
+
+### Connecting to this API
+
+### Credits
+
+### Acknowledgements
