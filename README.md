@@ -1,3 +1,5 @@
+![FitTribe API Banner](docs/readme_images/api_banner.png)
+
 # FitTribe API
 
 Developer : Radleigh Smith
