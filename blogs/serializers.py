@@ -19,19 +19,19 @@ class BlogSerializer(serializers.ModelSerializer):
                 'Image size is larger than 2 MB, please try uploading a smaller image.'
             )
 
-        if value.width > max_width:
+        if value.image.width > max_width:
             raise serializers.ValidationError(
                 f'Image width is larger than {max_width} pixels, please upload a smaller image.'
             )
-        if value.height > max_height:
+        if value.image.height > max_height:
             raise serializers.ValidationError(
                 f'Image height is larger than {max_height} pixels, please upload a smaller image.'
             )
-        if value.width < min_width:
+        if value.image.width < min_width:
             raise serializers.ValidationError(
                 f'Image width is smaller than {min_width} pixels, please upload a larger image.'
             )
-        if value.height < min_height:
+        if value.image.height < min_height:
             raise serializers.ValidationError(
                 f'Image height is smaller than {min_height} pixels, please upload a larger image.'
             )
@@ -49,19 +49,19 @@ class BlogSerializer(serializers.ModelSerializer):
                 'Image size is larger than 2 MB, please try uploading a smaller image.'
             )
 
-        if value.width > max_width:
+        if value.image.width > max_width:
             raise serializers.ValidationError(
                 f'Image width is larger than {max_width} pixels, please upload a smaller image.'
             )
-        if value.height > max_height:
+        if value.image.height > max_height:
             raise serializers.ValidationError(
                 f'Image height is larger than {max_height} pixels, please upload a smaller image.'
             )
-        if value.width < min_width:
+        if value.image.width < min_width:
             raise serializers.ValidationError(
                 f'Image width is smaller than {min_width} pixels, please upload a larger image.'
             )
-        if value.height < min_height:
+        if value.image.height < min_height:
             raise serializers.ValidationError(
                 f'Image height is smaller than {min_height} pixels, please upload a larger image.'
             )
