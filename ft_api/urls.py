@@ -22,5 +22,6 @@ urlpatterns = [
     path('', include('profiles.urls')),
     path('', include('blogs.urls')),
     path('', include('blog_comments.urls')),
-    path('', include('blog_likes.urls'))
+    path('', include('blog_likes.urls')),
+    path('', include('workouts.urls')),
 ]
