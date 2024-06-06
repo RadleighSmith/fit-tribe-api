@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'blog_comments',
     'blog_likes',
     'workouts',
+    'workout_comments',
 ]
 
 MIDDLEWARE = [
