@@ -11,22 +11,22 @@ class WorkoutSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.profile_image.url')
+    workout_items = WorkoutItemSerializer(many=True)
 
     def validate_banner(self, value):
         """
-        Validates the banner image to ensure it meets size and dimension constraints.
+        Validate the banner image to ensure it meets size and dimension constraints.
         """
         max_size = 1024 * 1024 * 2  # 2 MB
         max_width = 4096
         max_height = 4096
         min_width = 1200
         min_height = 400
-        
+
         if value.size > max_size:
             raise serializers.ValidationError(
                 'Image size is larger than 2 MB, please try uploading a smaller image.'
             )
-
         if value.image.width > max_width:
             raise serializers.ValidationError(
                 f'Image width is larger than {max_width} pixels, please upload a smaller image.'
@@ -59,7 +59,6 @@ class WorkoutSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Image size is larger than 2 MB, please try uploading a smaller image.'
             )
-
         if value.image.width > max_width:
             raise serializers.ValidationError(
                 f'Image width is larger than {max_width} pixels, please upload a smaller image.'
@@ -115,6 +114,7 @@ class WorkoutSerializer(serializers.ModelSerializer):
         model = Workout
         fields = [
             'id', 'owner', 'is_owner', 'profile_id', 
-            'profile_image', 'title', 'content', 'created_at', 
-            'updated_at', 'banner', 'image', 'workout_items'
+            'profile_image', 'title', 'content', 
+            'created_at', 'updated_at', 'banner', 
+            'image', 'workout_items'
         ]
