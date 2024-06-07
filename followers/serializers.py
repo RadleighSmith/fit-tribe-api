@@ -7,7 +7,8 @@ class FollowerSerializer(serializers.ModelSerializer):
     Serializer for the Follower model.
 
     This serializer handles the serialization and deserialization of Follower objects,
-    including validation to ensure that duplicate follower relationships are not created.
+    including validation to ensure that duplicate follower relationships are not created
+    and users cannot follow themselves.
 
     Attributes:
         follower (ReadOnlyField): The username of the user who is following another user.
@@ -27,5 +28,6 @@ class FollowerSerializer(serializers.ModelSerializer):
         try:
             return super().create(validated_data)
         except IntegrityError:
-            raise serializers.ValidationError({'detail': 'This follow relationship already exists.'})
-
+            raise serializers.ValidationError({
+                'detail': 'This follow relationship already exists or you cannot follow yourself.'
+            })
