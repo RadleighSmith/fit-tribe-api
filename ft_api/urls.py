@@ -26,4 +26,5 @@ urlpatterns = [
     path('', include('workouts.urls')),
     path('', include('workout_comments.urls')),
     path('', include('workout_likes.urls')),
+    path('', include('followers.urls')),
 ]
