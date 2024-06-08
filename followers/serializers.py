@@ -11,18 +11,18 @@ class FollowerSerializer(serializers.ModelSerializer):
     and users cannot follow themselves.
 
     Attributes:
-        follower (ReadOnlyField): The username of the user who is following another user.
+        owner (ReadOnlyField): The username of the user who is following another user.
         followed_name (ReadOnlyField): The username of the user who is being followed.
 
     Methods:
         create(validated_data): Custom create method to handle IntegrityError and provide a user-friendly error message.
     """
-    follower = serializers.ReadOnlyField(source='follower.username')
+    owner = serializers.ReadOnlyField(source='owner.username')
     followed_name = serializers.ReadOnlyField(source='following.username')
 
     class Meta:
         model = Follower
-        fields = ['id', 'follower', 'following', 'created_at', 'followed_name']
+        fields = ['id', 'owner', 'following', 'created_at', 'followed_name']
 
     def create(self, validated_data):
         try:

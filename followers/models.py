@@ -6,7 +6,7 @@ class Follower(models.Model):
     Represents a follower relationship between two users.
 
     Attributes:
-        follower (ForeignKey): The user who is following another user. 
+        owner (ForeignKey): The user who is following another user. 
             ForeignKey links to the User model.
         following (ForeignKey): The user who is being followed.
             ForeignKey links to the User model.
@@ -21,15 +21,15 @@ class Follower(models.Model):
     Methods:
         __str__(): Returns a string representation of the follower relationship.
     """
-    follower = models.ForeignKey(User, related_name='following', on_delete=models.CASCADE, verbose_name='follower')
-    following = models.ForeignKey(User, related_name='followers', on_delete=models.CASCADE, verbose_name='following')
+    owner = models.ForeignKey(User, related_name='following', on_delete=models.CASCADE, verbose_name='follower')
+    following = models.ForeignKey(User, related_name='followed', on_delete=models.CASCADE, verbose_name='following')
     created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
         ordering = ['-created_at']
-        unique_together = ('follower', 'following')
+        unique_together = ('owner', 'following')
         verbose_name = 'Follower'
         verbose_name_plural = 'Followers'
         
     def __str__(self):
-        return f'{self.follower.username} follows {self.following.username}'
+        return f'{self.owner.username} follows {self.following.username}'
