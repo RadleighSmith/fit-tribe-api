@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'workout_likes',
     'followers',
     'groups',
+    'group_events',
 ]
 
 MIDDLEWARE = [
