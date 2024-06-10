@@ -28,4 +28,5 @@ urlpatterns = [
     path('', include('workout_likes.urls')),
     path('', include('followers.urls')),
     path('', include('groups.urls')),
+    path('', include('group_events.urls')),
 ]
