@@ -1,21 +1,42 @@
 from rest_framework import serializers
 from .models import Workout, WorkoutItem
+from workout_likes.models import WorkoutLike
 
 class WorkoutItemSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the WorkoutItem model.
+    """
     class Meta:
         model = WorkoutItem
         fields = ['id', 'exercise_name', 'quantity']
 
 class WorkoutSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Workout model.
+
+    This serializer handles the serialization and deserialization of Workout objects,
+    including additional computed fields for ownership, profile information, like status,
+    and associated workout items.
+    """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.profile_image.url')
     workout_items = WorkoutItemSerializer(many=True)
+    like_id = serializers.SerializerMethodField()
 
     def validate_banner(self, value):
         """
         Validate the banner image to ensure it meets size and dimension constraints.
+
+        Args:
+            value (ImageField): The banner image to be validated.
+
+        Raises:
+            serializers.ValidationError: If the image size exceeds 2 MB or if the image dimensions are not within the required range.
+
+        Returns:
+            ImageField: The validated banner image.
         """
         max_size = 1024 * 1024 * 2  # 2 MB
         max_width = 4096
@@ -48,6 +69,15 @@ class WorkoutSerializer(serializers.ModelSerializer):
     def validate_image(self, value):
         """
         Validates the content image to ensure it meets size and dimension constraints.
+
+        Args:
+            value (ImageField): The content image to be validated.
+
+        Raises:
+            serializers.ValidationError: If the image size exceeds 2 MB or if the image dimensions are not within the required range.
+
+        Returns:
+            ImageField: The validated content image.
         """
         max_size = 1024 * 1024 * 2  # 2 MB
         max_width = 4096
@@ -80,13 +110,42 @@ class WorkoutSerializer(serializers.ModelSerializer):
     def get_is_owner(self, obj):
         """
         Checks if the requesting user is the owner of the workout post.
+
+        Args:
+            obj (Workout): The workout object being serialized.
+
+        Returns:
+            bool: True if the current user is the owner, False otherwise.
         """
         request = self.context['request']
         return request.user == obj.owner
+    
+    def get_like_id(self, obj):
+        """
+        Get the ID of the 'WorkoutLike' instance if the current user has liked the given workout.
+
+        Args:
+            obj (Workout): The workout object being serialized.
+
+        Returns:
+            int or None: The ID of the 'WorkoutLike' instance if the current user has liked the workout,
+                         None otherwise.
+        """
+        user = self.context['request'].user
+        if user.is_authenticated:
+            like = WorkoutLike.objects.filter(owner=user, workout=obj).first()
+            return like.id if like else None
+        return None
 
     def create(self, validated_data):
         """
         Creates a new workout post with associated workout items.
+
+        Args:
+            validated_data (dict): The validated data for creating the workout post.
+
+        Returns:
+            Workout: The created workout post.
         """
         workout_items_data = validated_data.pop('workout_items')
         workout = Workout.objects.create(**validated_data)
@@ -97,6 +156,13 @@ class WorkoutSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         """
         Updates an existing workout and its associated workout items.
+
+        Args:
+            instance (Workout): The existing workout instance to be updated.
+            validated_data (dict): The validated data for updating the workout post.
+
+        Returns:
+            Workout: The updated workout post.
         """
         workout_items_data = validated_data.pop('workout_items')
         instance.title = validated_data.get('title', instance.title)
@@ -116,5 +182,5 @@ class WorkoutSerializer(serializers.ModelSerializer):
             'id', 'owner', 'is_owner', 'profile_id', 
             'profile_image', 'title', 'content', 
             'created_at', 'updated_at', 'banner', 
-            'image', 'workout_items'
+            'image', 'workout_items', 'like_id'
         ]
