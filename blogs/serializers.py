@@ -13,7 +13,9 @@ class BlogSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.profile_image.url')
-    like_id = serializers.SerializerMethodField()
+    blog_like_id = serializers.SerializerMethodField()
+    blog_likes_count = serializers.ReadOnlyField()
+    blog_comments_count = serializers.ReadOnlyField()
 
     def validate_banner(self, value):
         """
@@ -112,7 +114,7 @@ class BlogSerializer(serializers.ModelSerializer):
         request = self.context['request']
         return request.user == obj.owner
     
-    def get_like_id(self, obj):
+    def get_blog_like_id(self, obj):
         """
         Get the ID of the 'BlogLike' instance if the current user has liked the given blog.
 
@@ -135,5 +137,6 @@ class BlogSerializer(serializers.ModelSerializer):
             'id', 'owner', 'is_owner', 'profile_id', 
             'profile_image', 'title', 'content', 
             'created_at', 'updated_at', 'banner', 
-            'image', 'like_id'
+            'image', 'blog_like_id', 'blog_likes_count',
+            'blog_comments_count'
         ]
