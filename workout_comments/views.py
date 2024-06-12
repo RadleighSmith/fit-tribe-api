@@ -1,4 +1,5 @@
 from rest_framework import generics, permissions
+from django_filters.rest_framework import DjangoFilterBackend
 from ft_api.permissions import IsOwnerOrReadOnly
 from .models import WorkoutComment
 from .serializers import WorkoutCommentSerializer, WorkoutCommentDetailSerializer
@@ -7,7 +8,9 @@ class WorkoutCommentList(generics.ListCreateAPIView):
     serializer_class = WorkoutCommentSerializer
     permission_classes = [permissions.IsAuthenticated]
     queryset = WorkoutComment.objects.all()
-    
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['workout']
+
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
         
