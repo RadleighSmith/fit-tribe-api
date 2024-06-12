@@ -18,11 +18,11 @@ class FollowerSerializer(serializers.ModelSerializer):
         create(validated_data): Custom create method to handle IntegrityError and provide a user-friendly error message.
     """
     owner = serializers.ReadOnlyField(source='owner.username')
-    followed_name = serializers.ReadOnlyField(source='following.username')
+    followed_name = serializers.ReadOnlyField(source='followed.username')
 
     class Meta:
         model = Follower
-        fields = ['id', 'owner', 'following', 'created_at', 'followed_name']
+        fields = ['id', 'owner', 'followed', 'created_at', 'followed_name']
 
     def create(self, validated_data):
         try:
@@ -33,6 +33,6 @@ class FollowerSerializer(serializers.ModelSerializer):
             })
 
     def validate(self, data):
-        if data['following'] == self.context['request'].user:
+        if data['followed'] == self.context['request'].user:
             raise serializers.ValidationError("You cannot follow yourself.")
         return data
