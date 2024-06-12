@@ -16,7 +16,12 @@ class WorkoutList(generics.ListCreateAPIView):
         workout_comments_count=Count('workoutcomment', distinct=True)
     ).order_by('-created_at')
     filter_backends = [
-        filters.OrderingFilter
+        filters.OrderingFilter,
+        filters.SearchFilter,
+    ]
+    search_fields = [
+        'owner__username',
+        'title',
     ]
     ordering_fields = [
         'workout_likes_count',

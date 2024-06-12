@@ -16,7 +16,12 @@ class BlogList(generics.ListCreateAPIView):
         blog_comments_count=Count('blogcomment', distinct=True)
     ).order_by('-created_at')
     filter_backends = [
-        filters.OrderingFilter
+        filters.OrderingFilter,
+        filters.SearchFilter,
+    ]
+    search_fields = [
+        'owner__username',
+        'title',
     ]
     ordering_fields = [
         'blog_likes_count',
