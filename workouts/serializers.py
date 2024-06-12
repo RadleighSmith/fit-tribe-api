@@ -23,7 +23,9 @@ class WorkoutSerializer(serializers.ModelSerializer):
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.profile_image.url')
     workout_items = WorkoutItemSerializer(many=True)
-    like_id = serializers.SerializerMethodField()
+    workout_like_id = serializers.SerializerMethodField()
+    workout_likes_count = serializers.ReadOnlyField()
+    workout_comments_count = serializers.ReadOnlyField()
 
     def validate_banner(self, value):
         """
@@ -120,7 +122,7 @@ class WorkoutSerializer(serializers.ModelSerializer):
         request = self.context['request']
         return request.user == obj.owner
     
-    def get_like_id(self, obj):
+    def get_workout_like_id(self, obj):
         """
         Get the ID of the 'WorkoutLike' instance if the current user has liked the given workout.
 
@@ -182,5 +184,6 @@ class WorkoutSerializer(serializers.ModelSerializer):
             'id', 'owner', 'is_owner', 'profile_id', 
             'profile_image', 'title', 'content', 
             'created_at', 'updated_at', 'banner', 
-            'image', 'workout_items', 'like_id'
+            'image', 'workout_items', 'workout_like_id',
+            'workout_likes_count', 'workout_comments_count'
         ]
