@@ -62,7 +62,10 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEV' in os.environ
 
-ALLOWED_HOSTS = ['localhost', 'fittribe-api.herokuapp.com']
+ALLOWED_HOSTS = [
+    'localhost',
+    os.environ.get('ALLOWED_HOST'),
+    '127.0.0.1']
 
 
 # Application definition
