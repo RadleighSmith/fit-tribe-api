@@ -121,14 +121,18 @@ if 'CLIENT_ORIGIN' in os.environ:
 
 if 'CLIENT_ORIGIN_DEV' in os.environ:
     extracted_url = re.match(
-        r'^https:\/\/\d+-[\w-]+\.ws\.codeinstitute-ide\.net$', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE
-    )
-    if extracted_url:
-        CORS_ALLOWED_ORIGIN_REGEXES = [
-            extracted_url.group(0),
-        ]
-    
+        r'^https?://[^/]+', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE
+    ).group(0)
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        rf"{extracted_url}.*"
+    ]
+
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'authorization',
+    'Access-Control-Allow-Origin',
+]
 
 ROOT_URLCONF = 'ft_api.urls'
 
