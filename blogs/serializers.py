@@ -131,23 +131,12 @@ class BlogSerializer(serializers.ModelSerializer):
             return like.id if like else None
         return None
 
-    def update(self, instance, validated_data):
-        remove_banner = validated_data.pop('remove_banner', False)
-        remove_image = validated_data.pop('remove_image', False)
-
-        if remove_banner:
-            instance.banner = 'default_blog_banner_t4cat3'  # Set to default banner
-        if remove_image:
-            instance.image = ''  # Remove the image
-        
-        return super().update(instance, validated_data)
-
     class Meta:
-        model = Blog
-        fields = [
-            'id', 'owner', 'is_owner', 'profile_id', 
-            'profile_image', 'title', 'content', 
-            'created_at', 'updated_at', 'banner', 
-            'image', 'blog_like_id', 'blog_likes_count',
-            'blog_comments_count', 'remove_banner', 'remove_image'
-        ]
+            model = Blog
+            fields = [
+                'id', 'owner', 'is_owner', 'profile_id', 
+                'profile_image', 'title', 'content', 
+                'created_at', 'updated_at', 'banner', 
+                'image', 'blog_like_id', 'blog_likes_count',
+                'blog_comments_count'
+            ]
