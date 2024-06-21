@@ -91,24 +91,24 @@ class ProfileSerializer(serializers.ModelSerializer):
         
         if value.size > max_size:
             raise serializers.ValidationError(
-                'Image size is larger than 2 MB, please try uploading a smaller image.'
+                'Profile Image size is larger than 2 MB, please try uploading a smaller image.'
             )
 
         if value.image.width > max_width:
             raise serializers.ValidationError(
-                f'Image width is larger than {max_width} pixels, please upload a smaller image.'
+                f'Profile Image width is larger than {max_width} pixels, please upload a smaller image.'
             )
         if value.image.height > max_height:
             raise serializers.ValidationError(
-                f'Image height is larger than {max_height} pixels, please upload a smaller image.'
+                f'Profile Image height is larger than {max_height} pixels, please upload a smaller image.'
             )
         if value.image.width < min_width:
             raise serializers.ValidationError(
-                f'Image width is smaller than {min_width} pixels, please upload a larger image.'
+                f'Profile Image width is smaller than {min_width} pixels, please upload a larger image.'
             )
         if value.image.height < min_height:
             raise serializers.ValidationError(
-                f'Image height is smaller than {min_height} pixels, please upload a larger image.'
+                f'Profile Image height is smaller than {min_height} pixels, please upload a larger image.'
             )
         return value
 
@@ -133,24 +133,24 @@ class ProfileSerializer(serializers.ModelSerializer):
         
         if value.size > max_size:
             raise serializers.ValidationError(
-                'Image size is larger than 2 MB, please try uploading a smaller image.'
+                'Cover Image size is larger than 2 MB, please try uploading a smaller image.'
             )
 
         if value.image.width > max_width:
             raise serializers.ValidationError(
-                f'Image width is larger than {max_width} pixels, please upload a smaller image.'
+                f'Cover Image  width is larger than {max_width} pixels, please upload a smaller image.'
             )
         if value.image.height > max_height:
             raise serializers.ValidationError(
-                f'Image height is larger than {max_height} pixels, please upload a smaller image.'
+                f'Cover Image  height is larger than {max_height} pixels, please upload a smaller image.'
             )
         if value.image.width < min_width:
             raise serializers.ValidationError(
-                f'Image width is smaller than {min_width} pixels, please upload a larger image.'
+                f'Cover Image  width is smaller than {min_width} pixels, please upload a larger image.'
             )
         if value.image.height < min_height:
             raise serializers.ValidationError(
-                f'Image height is smaller than {min_height} pixels, please upload a larger image.'
+                f'Cover Image  height is smaller than {min_height} pixels, please upload a larger image.'
             )
         return value
 
