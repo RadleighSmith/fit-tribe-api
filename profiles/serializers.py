@@ -18,20 +18,22 @@ class ProfileSerializer(serializers.ModelSerializer):
         following_id (SerializerMethodField): The ID of the following relationship if the requesting user follows the profile owner.
         following_count (ReadOnlyField): The number of users the profile owner is following.
         followers_count (ReadOnlyField): The number of users following the profile owner.
+        email (ReadOnlyField): The email of the profile owner.
+        display_name (BooleanField): Indicates if the real name should be displayed on the profile.
 
     Methods:
         get_is_owner(obj): Checks if the requesting user is the owner of the profile.
         get_following_id(obj): Gets the ID of the following relationship if the requesting user follows the profile owner.
-        get_groups_count(obj): Gets the number of groups the profile owner has joined.
-        get_group_names(obj): Gets the names of the groups the profile owner has joined.
     """
     owner = serializers.ReadOnlyField(source='owner.username')
+    email = serializers.ReadOnlyField(source='owner.email')
     is_owner = serializers.SerializerMethodField()
     blogs_count = serializers.ReadOnlyField()
     workouts_count = serializers.ReadOnlyField()
     following_id = serializers.SerializerMethodField()
     following_count = serializers.ReadOnlyField()
     followers_count = serializers.ReadOnlyField()
+    display_name = serializers.BooleanField(default=False)
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -52,5 +54,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             'id', 'owner', 'is_owner', 'name', 'bio', 
             'created_at', 'updated_at', 'profile_image',
             'cover_image', 'blogs_count', 'workouts_count',
-            'following_id', 'following_count', 'followers_count'
+            'following_id', 'following_count', 'followers_count',
+            'email', 'display_name'
         ]
