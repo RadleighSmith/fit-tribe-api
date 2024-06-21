@@ -24,6 +24,8 @@ class ProfileSerializer(serializers.ModelSerializer):
     Methods:
         get_is_owner(obj): Checks if the requesting user is the owner of the profile.
         get_following_id(obj): Gets the ID of the following relationship if the requesting user follows the profile owner.
+        validate_profile_image(value): Validates the profile image.
+        validate_cover_image(value): Validates the cover image.
         update(instance, validated_data): Handles the update process including updating the user's email.
     """
     owner = serializers.ReadOnlyField(source='owner.username')
@@ -67,6 +69,90 @@ class ProfileSerializer(serializers.ModelSerializer):
             ).first()
             return following.id if following else None
         return None
+
+    def validate_profile_image(self, value):
+        """
+        Validate the profile image to ensure it meets the size and dimension requirements.
+
+        Args:
+            value (ImageField): The profile image to be validated.
+
+        Raises:
+            serializers.ValidationError: If the image size exceeds 2 MB or if the image dimensions are not within the required range.
+
+        Returns:
+            ImageField: The validated profile image.
+        """
+        max_size = 1024 * 1024 * 2  # 2 MB
+        max_width = 4096
+        max_height = 4096
+        min_width = 200
+        min_height = 200
+        
+        if value.size > max_size:
+            raise serializers.ValidationError(
+                'Image size is larger than 2 MB, please try uploading a smaller image.'
+            )
+
+        if value.image.width > max_width:
+            raise serializers.ValidationError(
+                f'Image width is larger than {max_width} pixels, please upload a smaller image.'
+            )
+        if value.image.height > max_height:
+            raise serializers.ValidationError(
+                f'Image height is larger than {max_height} pixels, please upload a smaller image.'
+            )
+        if value.image.width < min_width:
+            raise serializers.ValidationError(
+                f'Image width is smaller than {min_width} pixels, please upload a larger image.'
+            )
+        if value.image.height < min_height:
+            raise serializers.ValidationError(
+                f'Image height is smaller than {min_height} pixels, please upload a larger image.'
+            )
+        return value
+
+    def validate_cover_image(self, value):
+        """
+        Validate the cover image to ensure it meets the size and dimension requirements.
+
+        Args:
+            value (ImageField): The cover image to be validated.
+
+        Raises:
+            serializers.ValidationError: If the image size exceeds 2 MB or if the image dimensions are not within the required range.
+
+        Returns:
+            ImageField: The validated cover image.
+        """
+        max_size = 1024 * 1024 * 2  # 2 MB
+        max_width = 4096
+        max_height = 4096
+        min_width = 1200
+        min_height = 400
+        
+        if value.size > max_size:
+            raise serializers.ValidationError(
+                'Image size is larger than 2 MB, please try uploading a smaller image.'
+            )
+
+        if value.image.width > max_width:
+            raise serializers.ValidationError(
+                f'Image width is larger than {max_width} pixels, please upload a smaller image.'
+            )
+        if value.image.height > max_height:
+            raise serializers.ValidationError(
+                f'Image height is larger than {max_height} pixels, please upload a smaller image.'
+            )
+        if value.image.width < min_width:
+            raise serializers.ValidationError(
+                f'Image width is smaller than {min_width} pixels, please upload a larger image.'
+            )
+        if value.image.height < min_height:
+            raise serializers.ValidationError(
+                f'Image height is smaller than {min_height} pixels, please upload a larger image.'
+            )
+        return value
 
     def update(self, instance, validated_data):
         """
