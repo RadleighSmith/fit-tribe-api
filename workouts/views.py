@@ -1,5 +1,6 @@
 from django.db.models import Count
 from rest_framework import generics, permissions, filters
+from rest_framework.parsers import MultiPartParser, FormParser
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Workout
 from .serializers import WorkoutSerializer
@@ -37,6 +38,7 @@ class WorkoutList(generics.ListCreateAPIView):
     ]
     serializer_class = WorkoutSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    parser_classes = [MultiPartParser, FormParser]
 
     def perform_create(self, serializer):
         """
@@ -59,6 +61,7 @@ class WorkoutDetail(generics.RetrieveUpdateDestroyAPIView):
     )
     serializer_class = WorkoutSerializer
     permission_classes = [IsOwnerOrReadOnly]
+    parser_classes = [MultiPartParser, FormParser]
 
     def get_object(self):
         """

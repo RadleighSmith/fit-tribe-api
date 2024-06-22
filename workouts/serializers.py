@@ -30,15 +30,6 @@ class WorkoutSerializer(serializers.ModelSerializer):
     def validate_banner(self, value):
         """
         Validate the banner image to ensure it meets size and dimension constraints.
-
-        Args:
-            value (ImageField): The banner image to be validated.
-
-        Raises:
-            serializers.ValidationError: If the image size exceeds 2 MB or if the image dimensions are not within the required range.
-
-        Returns:
-            ImageField: The validated banner image.
         """
         max_size = 1024 * 1024 * 2  # 2 MB
         max_width = 4096
@@ -70,16 +61,7 @@ class WorkoutSerializer(serializers.ModelSerializer):
 
     def validate_image(self, value):
         """
-        Validates the content image to ensure it meets size and dimension constraints.
-
-        Args:
-            value (ImageField): The content image to be validated.
-
-        Raises:
-            serializers.ValidationError: If the image size exceeds 2 MB or if the image dimensions are not within the required range.
-
-        Returns:
-            ImageField: The validated content image.
+        Validate the content image to ensure it meets size and dimension constraints.
         """
         max_size = 1024 * 1024 * 2  # 2 MB
         max_width = 4096
@@ -111,27 +93,14 @@ class WorkoutSerializer(serializers.ModelSerializer):
 
     def get_is_owner(self, obj):
         """
-        Checks if the requesting user is the owner of the workout post.
-
-        Args:
-            obj (Workout): The workout object being serialized.
-
-        Returns:
-            bool: True if the current user is the owner, False otherwise.
+        Check if the request user is the owner of the workout.
         """
         request = self.context['request']
         return request.user == obj.owner
     
     def get_workout_like_id(self, obj):
         """
-        Get the ID of the 'WorkoutLike' instance if the current user has liked the given workout.
-
-        Args:
-            obj (Workout): The workout object being serialized.
-
-        Returns:
-            int or None: The ID of the 'WorkoutLike' instance if the current user has liked the workout,
-                         None otherwise.
+        Get the like ID if the workout is liked by the current user.
         """
         user = self.context['request'].user
         if user.is_authenticated:
@@ -141,15 +110,9 @@ class WorkoutSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """
-        Creates a new workout post with associated workout items.
-
-        Args:
-            validated_data (dict): The validated data for creating the workout post.
-
-        Returns:
-            Workout: The created workout post.
+        Create a new workout instance with nested workout items.
         """
-        workout_items_data = validated_data.pop('workout_items')
+        workout_items_data = self.initial_data.get('workout_items')
         workout = Workout.objects.create(**validated_data)
         for item_data in workout_items_data:
             WorkoutItem.objects.create(workout=workout, **item_data)
@@ -157,16 +120,9 @@ class WorkoutSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         """
-        Updates an existing workout and its associated workout items.
-
-        Args:
-            instance (Workout): The existing workout instance to be updated.
-            validated_data (dict): The validated data for updating the workout post.
-
-        Returns:
-            Workout: The updated workout post.
+        Update an existing workout instance with nested workout items.
         """
-        workout_items_data = validated_data.pop('workout_items')
+        workout_items_data = self.initial_data.get('workout_items')
         instance.title = validated_data.get('title', instance.title)
         instance.content = validated_data.get('content', instance.content)
         instance.banner = validated_data.get('banner', instance.banner)
