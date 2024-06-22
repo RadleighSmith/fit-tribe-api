@@ -22,7 +22,7 @@ class WorkoutSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.profile_image.url')
-    workout_items = WorkoutItemSerializer(many=True)
+    workout_items = WorkoutItemSerializer(many=True, required=False)
     workout_like_id = serializers.SerializerMethodField()
     workout_likes_count = serializers.ReadOnlyField()
     workout_comments_count = serializers.ReadOnlyField()
@@ -108,38 +108,12 @@ class WorkoutSerializer(serializers.ModelSerializer):
             return like.id if like else None
         return None
 
-    def create(self, validated_data):
-        """
-        Create a new workout instance with nested workout items.
-        """
-        workout_items_data = self.initial_data.get('workout_items')
-        workout = Workout.objects.create(**validated_data)
-        for item_data in workout_items_data:
-            WorkoutItem.objects.create(workout=workout, **item_data)
-        return workout
-
-    def update(self, instance, validated_data):
-        """
-        Update an existing workout instance with nested workout items.
-        """
-        workout_items_data = self.initial_data.get('workout_items')
-        instance.title = validated_data.get('title', instance.title)
-        instance.content = validated_data.get('content', instance.content)
-        instance.banner = validated_data.get('banner', instance.banner)
-        instance.image = validated_data.get('image', instance.image)
-        instance.save()
-
-        instance.workout_items.all().delete()
-        for item_data in workout_items_data:
-            WorkoutItem.objects.create(workout=instance, **item_data)
-        return instance
-
     class Meta:
         model = Workout
         fields = [
             'id', 'owner', 'is_owner', 'profile_id', 
             'profile_image', 'title', 'content', 
             'created_at', 'updated_at', 'banner', 
-            'image', 'workout_items', 'workout_like_id',
-            'workout_likes_count', 'workout_comments_count'
+            'image', 'workout_like_id', 'workout_likes_count',
+            'workout_comments_count'
         ]
