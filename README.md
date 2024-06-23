@@ -59,9 +59,21 @@ The FitTribe API encompasses a wide range of features to enhance user engagement
 
 ### User Stories:
 
+To streamline our development process and ensure a seamless user experience, we have consolidated all user stories within the front-end repository. This approach allows for a cohesive view of user requirements and expectations, facilitating better coordination between the front-end and back-end development. By maintaining user stories in a single location, we can more effectively manage and prioritize features, ensuring that the FitTribe application meets the needs and desires of our users efficiently and comprehensively. You can find the detailed user stories and their corresponding development progress on the front-end repository.
+
+[Find the User Stories here](https://github.com/RadleighSmith/fit-tribe-frontend/issues)
+
 ### Database Schema:
 
+The database schema for the FitTribe application was meticulously crafted using [Lucidchart](https://www.lucidchart.com/), a powerful diagramming tool that facilitates the visualization and design of complex database structures. This schema serves as the backbone of our application, ensuring efficient data management and retrieval processes. By employing [Lucidchart](https://www.lucidchart.com/), we were able to create a clear and detailed representation of our database relationships, encompassing user authentication, blog posts, workout posts, likes, comments, profiles, followers, groups, memberships(for Groups) and events.
+
+![ERD Diagram](docs/readme_images/erd_diagram.png)
+
+[Lucidchart](https://www.lucidchart.com/)'s intuitive interface allowed us to map out the relationships between various entities, ensuring that our schema is both comprehensive and scalable. This visual approach not only streamlined the design process but also provided a valuable reference for our development team, aiding in the implementation and maintenance of the database. The resulting schema is robust and well-structured, laying a solid foundation for the FitTribe application's data architecture.
+
 ### Agile Development:
+
+The FitTribe API was developed using Agile methodology, emphasizing flexibility, collaboration, and continuous improvement. By adhering to Agile values and principles, we ensured a seamless partnership with the FitTribe frontend application. This approach allowed us to manage project complexities effectively and adapt quickly to changing requirements. The full Agile plan, detailing our iterative development process, can be found in the [FitTribe frontend repository](https://github.com/RadleighSmith/fit-tribe-frontend).
 
 ## Features
 
