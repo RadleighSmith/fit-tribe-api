@@ -101,6 +101,7 @@ INSTALLED_APPS = [
     'followers',
     'groups',
     'group_events',
+    'feed',
 ]
 SITE_ID = 1
 MIDDLEWARE = [
