@@ -36,4 +36,5 @@ urlpatterns = [
     path('', include('followers.urls')),
     path('', include('groups.urls')),
     path('', include('group_events.urls')),
+    path('', include('feed.urls')),
 ]
