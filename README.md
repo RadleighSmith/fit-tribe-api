@@ -439,11 +439,112 @@ These tools and technologies collectively contributed to the efficient developme
 
 ### Deployment
 
+The FitTribe API is deployed using Heroku. Follow the instructions below to deploy the API on Heroku:
+
+#### Instructions to Deploy Using Heroku:
+
+1. **Create a New App:**
+   - Navigate to the Heroku dashboard and click on the "New" button in the top right corner.
+   - Select "Create new app".
+   - Enter a unique name for your app and choose the appropriate region.
+   - Click "Create app".
+
+2. **Configure Settings:**
+   - Go to the "Settings" tab of your new app.
+   - Click "Reveal Config Vars" to add the necessary configuration variables:
+     - `ALLOWED_HOST`
+     - `CLIENT_ORIGIN`
+     - `CLIENT_ORIGIN_DEV`
+     - `CLOUDINARY_URL`
+     - `DATABASE_URL`
+     - `SECRET_KEY`
+
+3. **Deploy the Application:**
+   - Navigate to the "Deploy" tab.
+   - Choose "GitHub" as the deployment method.
+   - Connect to your GitHub repository by searching for the correct repository and then clicking "Connect".
+   - To manually deploy the project, click "Deploy Branch". Once the build is complete, a message will confirm the successful deployment.
+   - Click the "View" button to access the deployed application and note the URL.
+
+4. **Ensure Debug is False:**
+   - Make sure the `DEBUG` setting is set to `False` for production in your `settings.py`.
+
 ### Cloning this Repository
+
+To work on this repository locally, follow these steps:
+
+#### Instructions to Clone the Repository:
+
+1. **Clone the Repository:**
+   - In the GitHub repository, click on the green "Code" button.
+   - Copy the repository link.
+   - Open your IDE or local coding environment and use the link to clone the repository.
+
+   **For example, in VSCode:**
+   - Click on "Clone Git Repository..." and paste the link.
+   - Choose the location to save the repository.
+   - The repository should now be set up and ready to work on.
+
+   **For example, in CodeAnywhere:**
+   - Click on "Add new workspace".
+   - Select "Create from your project repository" and paste the link.
+   - CodeAnywhere will open a new workspace containing the repository.
+
+2. **Create a Virtual Environment:**
+   - In VSCode, use the following commands to create and activate a virtual environment:
+     ```bash
+     python3 -m venv .venv
+     source .venv/bin/activate
+     ```
+
+3. **Install Dependencies:**
+   - Install the required dependencies using pip:
+     ```bash
+     pip3 install -r requirements.txt
+     ```
+
+4. **Set Up Environment Variables:**
+   - Create an `env.py` file in the main directory.
+   - Add the necessary environment variables such as `SECRET_KEY`, `CLIENT_ORIGIN`, `CLOUDINARY_URL`, `DATABASE_URL`, and `DEV`.
+
+5. **Ensure `.gitignore` is Configured:**
+   - Check that both the virtual environment and `env.py` are listed in the `.gitignore` file.
+
+6. **Run the Server:**
+   - Check everything is working by running the server:
+     ```bash
+     python3 manage.py runserver
+     ```
 
 ### Forking a Branch
 
+To protect the main branch while working on new features or experiments, create a forked branch.
+
+#### Instructions to Fork the Repository:
+
+1. **Create a New Branch:**
+   - In the GitHub repository, click on the branch indicator.
+   - Click on "New branch".
+   - Enter a name for the new branch and create it.
+   - The new branch should now appear in the list.
+
+2. **Clone and Work on the New Branch:**
+   - Follow the cloning steps to clone the new branch and work on it.
+
+#### Instructions to Fork Directly from an Issue:
+
+1. **Create a Branch from an Issue:**
+   - View the issue from the issues list or project board.
+   - Under "Development" on the right side, click "create a branch for this issue".
+   - This will create a forked branch tied to the issue.
+
 ### Connecting to this API
+
+#### Instructions to Connect to this API:
+
+1. **Set the Frontend URL:**
+   - Add the deployed URL of the frontend application as a config var in the Heroku deployment settings of the API.
+   - Use the key `CLIENT_ORIGIN` and ensure there is no trailing slash at the end of the URL.
 
 ### Credits
 
