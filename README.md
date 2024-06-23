@@ -334,6 +334,38 @@ The GroupEvent model includes metadata to ensure proper ordering and naming:
 
 ### Future Features
 
+The FitTribe API has been designed with extensibility in mind, allowing for numerous exciting future enhancements to further enrich the user experience. Here are some of the key features planned for future development:
+
+**Instant Messaging**
+
+- *Real-Time Communication:* Implementing an instant messaging feature will enable users to communicate with each other in real-time. This feature will support direct messages, group chats, and possibly integration with existing messaging platforms.
+
+- *Notification System:* Users will receive instant notifications for new messages, ensuring they stay connected and engaged with their fitness community.
+
+**Post Tags**
+
+- *Tagging System:* Introducing tags for blog posts, workouts, and events will help users categorize content more effectively. This will enhance search functionality and allow users to find relevant content more easily.
+
+- *Trending Tags:* Displaying trending tags can help highlight popular topics within the community, promoting engagement and content discovery.
+
+**Multiple Input Types**
+
+- *Rich Media Support:* Expanding input types to include GIFs, videos, and other multimedia formats will allow users to share more dynamic and engaging content.
+
+- *Enhanced Media Management:* Implementing robust media management tools will help users upload, organize, and display various types of media content seamlessly.
+
+**Enhanced Privacy Features**
+
+- *Privacy Controls:* Providing users with more granular privacy controls will allow them to manage who can see their posts, comments, and personal information. This will enhance user trust and security.
+
+**Reporting and Blocking**
+
+- *User Reporting:* Implementing a reporting system will allow users to report inappropriate or abusive content. This feature will include options for reporting posts, comments, and other user-generated content.
+
+- *Blocking Users:* Allowing users to block other members will help them manage their interactions and create a safer, more comfortable community environment.
+
+- *Admin Review:* Reports will be reviewed by administrators to ensure appropriate actions are taken, maintaining a respectful and supportive community atmosphere.
+
 ### Languages
 
 ### Frameworks and Libraries
