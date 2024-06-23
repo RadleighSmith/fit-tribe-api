@@ -79,9 +79,50 @@ The FitTribe API was developed using Agile methodology, emphasizing flexibility,
 
 ### Current Features
 
-#### **Security**
+**Security**
 
-#### **MODLES GO HERE**
+The FitTribe API ensures a high level of security by restricting access to most endpoints to authenticated users only. This section details the security measures implemented to safeguard user data and ensure proper authorization.
+
+**Public Endpoints**
+
+Only the following endpoints are accessible to unauthenticated users:
+
+- Base Root: Provides a welcome message.
+
+- /dj-rest-auth/registration/: Allows new users to register.
+
+- /dj-rest-auth/login/: Allows users to log in.
+
+All other endpoints require the user to be authenticated.
+
+**Authentication and Authorization**
+
+User Authentication: Utilizes Django Allauth for account creation, authentication, and management. This ensures that users can securely register, log in, and manage their profiles.
+JWT Tokens: The API uses JSON Web Tokens (JWT) for secure authentication, ensuring that user sessions are safely managed.
+Session Authentication: Alongside JWT, session authentication is also supported, providing flexibility in how users authenticate with the API.
+
+**Access Control**
+
+- IsAuthenticated: The default permission class for the API. Only authenticated users can access endpoints beyond the public ones.
+
+- IsOwnerOrReadOnly: This permission class allows read-only access to any request method (GET, HEAD, OPTIONS) for everyone. However, write permissions (POST, PUT, DELETE) are only allowed to the owner of the object.
+
+- IsAdminOrReadOnly: This permission class allows read-only access to any request method (GET, HEAD, OPTIONS) for everyone. Write permissions (POST, PUT, DELETE) are only allowed to admin users, defined as users who have either the is_staff or is_superuser attribute set to True.
+
+
+**Endpoint-Specific Security**
+
+Profile and Data Security: CRUD operations on user-generated content, such as blogs, workouts, comments, and likes, enforce strict ownership checks. This ensures that only the owner of the content can modify or delete it, safeguarding user data integrity.
+
+Secure Data Handling: All data is rigorously validated and sanitized to prevent common security vulnerabilities, including SQL injection and cross-site scripting (XSS).
+
+Groups and Events Security: Administrative privileges are required to create, update, or delete groups and events. While all users can view group and event information, only authenticated users have the ability to join or leave groups.
+
+Followers Security: Only authenticated users can establish new follower relationships, and only the owner of a follower relationship can remove it.
+
+These security measures ensure that only authorized users can perform specific actions, protecting user data and maintaining the integrity of the application's functionality.
+
+#### Models
 
 ### Future Features
 
