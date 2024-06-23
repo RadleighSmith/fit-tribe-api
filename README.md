@@ -368,9 +368,70 @@ The FitTribe API has been designed with extensibility in mind, allowing for nume
 
 ### Languages
 
+The FitTribe API leverages a robust and modern tech stack to ensure reliability, scalability, and ease of maintenance. The primary languages and frameworks used in the development of the backend are:
+
+**Python**
+Backend Development: Python is the core language used for backend development in the FitTribe API. Its simplicity and readability facilitate rapid development and ease of collaboration among developers.
+
+**Django Framework:** The Django framework, known for its robustness and scalability, is utilized to structure the backend. Django's ORM (Object-Relational Mapping) simplifies database interactions, ensuring efficient data handling and management.
+
+By leveraging these languages and frameworks, the FitTribe API ensures a seamless, efficient, and maintainable backend infrastructure. The combination of Python's powerful capabilities and Django's structured framework creates a cohesive and robust platform for managing the application's data and business logic.
+
 ### Frameworks and Libraries
 
+The FitTribe API is built using a combination of powerful frameworks and libraries to ensure robustness, scalability, and ease of development. Below is a list of the primary frameworks and libraries used in the project:
+
+**Core Frameworks**
+
+- **Django:** The main framework used for backend development. Django is known for its "batteries-included" approach, providing a wide range of built-in features and utilities.
+
+- **Django REST Framework (DRF):** An extension to Django for building RESTful APIs. It simplifies the creation of complex APIs with features like serialization, authentication, and more.
+
+**Authentication and Authorization**
+
+- **Django Allauth:** A versatile library for handling user authentication, registration, and account management.
+
+- **dj-rest-auth:** Provides a set of REST API endpoints for handling authentication securely. It integrates seamlessly with Django Allauth.
+
+**Storage and Media Management**
+
+- **Cloudinary:** A cloud-based service for managing media assets. It handles image and video uploads, storage, transformations, and delivery.
+
+- **Cloudinary Storage:** A Django storage backend for Cloudinary, enabling easy integration with Django's file handling.
+
+**Filtering and Pagination**
+
+- **django-filter:** Provides a simple way to filter down queries based on user-defined parameters, adding flexibility to the API endpoints.
+
+**Cross-Origin Resource Sharing (CORS)**
+
+- **django-cors-headers:** A Django app for handling the server headers required for Cross-Origin Resource Sharing (CORS). It allows the backend to communicate securely with frontend applications hosted on different domains.
+
 ### Tools and Technologies
+
+The development of the FitTribe API was facilitated by a variety of tools and technologies, ensuring a streamlined workflow and robust implementation. Below is a list of the primary tools and technologies used in the project:
+
+- **Visual Studio Code (VSCode):** The primary code editor used for developing the FitTribe API. VSCode offers a wide range of extensions and features that enhance productivity and code quality.
+
+- **Git:** A version control system used to manage and track changes in the source code during development. Git enables collaborative work and maintains a history of project changes.
+
+- **GitHub:** A web-based platform used to host the project repository. GitHub provides tools for version control, issue tracking, and project management. It also enables collaboration with other developers.
+
+- **Gitpod:** An online Integrated Development Environment (IDE) that provides a ready-to-code environment for the project. Gitpod integrates with GitHub, allowing seamless transition from code hosting to development.
+
+- **LucidChart:** An online diagramming tool used to plan and visualize the database schema. LucidChart helped in designing the relationships between different models and ensuring a well-structured database.
+
+- **Code Institute Template:** Provided a familiar base for the project, including pre-configured settings and structure, which helped in kickstarting the development process.
+
+- **Cloudinary:** A cloud-based service used to host and manage images. Cloudinary handles image uploads, storage, and transformations, providing a seamless experience for media management.
+
+- **ElephantSQL:** A managed PostgreSQL database service used to host the project's database. ElephantSQL provides reliable and scalable database hosting.
+
+- **Postman:** A tool used for testing APIs. Postman was used to test and validate the endpoints of the FitTribe API, ensuring they function correctly and meet the requirements.
+
+- **CI Python Linter:** A tool used to validate all the Python code in the project, ensuring adherence to coding standards and helping to maintain code quality.
+
+These tools and technologies collectively contributed to the efficient development, management, and deployment of the FitTribe API, ensuring a robust and scalable backend for the fitness social media platform.
 
 ### Testing & Validation
 
