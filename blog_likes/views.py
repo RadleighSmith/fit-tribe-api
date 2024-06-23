@@ -5,7 +5,7 @@ from blog_likes.serializers import BlogLikeSerializer
 
 
 class BlogLikeList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = BlogLikeSerializer
     queryset = BlogLike.objects.all()
 

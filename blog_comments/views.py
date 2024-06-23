@@ -6,7 +6,7 @@ from .serializers import BlogCommentSerializer, BlogCommentDetailSerializer
 
 class BlogCommentList(generics.ListCreateAPIView):
     serializer_class = BlogCommentSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = BlogComment.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['blog']

@@ -16,7 +16,7 @@ class ProfileList(generics.ListAPIView):
         followers_count = Count('owner__followed', distinct=True),
     ).order_by('-created_at')
     serializer_class = ProfileSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
     filter_backends = [
         filters.OrderingFilter,
         DjangoFilterBackend

@@ -12,7 +12,7 @@ class FollowerList(generics.ListCreateAPIView):
 
     The perform_create method associates the current logged-in user with the follower relationship.
     """
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Follower.objects.all()
     serializer_class = FollowerSerializer
 

@@ -37,7 +37,7 @@ class BlogList(generics.ListCreateAPIView):
         'likes__created_at',
     ]
     serializer_class = BlogSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         """

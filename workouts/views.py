@@ -37,7 +37,7 @@ class WorkoutList(generics.ListCreateAPIView):
         'workout_likes__created_at',
     ]
     serializer_class = WorkoutSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
 
     def perform_create(self, serializer):
