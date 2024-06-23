@@ -124,6 +124,214 @@ These security measures ensure that only authorized users can perform specific a
 
 #### Models
 
+**User Model (Django's built in User Model)**
+
+The User model is a built-in Django model that handles the core user attributes and authentication. Below is a table outlining the primary attributes used in the User model for FitTribe:
+
+| Attribute  | Type     | Description                                                    |
+|------------|----------|----------------------------------------------------------------|
+| username   | String   | A unique identifier for each user. This is the primary attribute used for user login. |
+| email      | String   | The email address of the user. Used for account verification, password reset, and other communication purposes. |
+| password   | String   | A hashed password for authenticating the user. Stored securely to ensure the protection of user accounts. |
+
+The User model in Django also includes additional fields and methods to handle user permissions, authentication, and profile management.
+
+**Profiles Model**
+
+
+The Profile model stores additional information for each user in the FitTribe application. Below is a detailed table outlining the attributes of the Profile model:
+
+| Attribute      | Type          | Description                                                                                  |
+|----------------|---------------|----------------------------------------------------------------------------------------------|
+| owner          | Foreign Key   | A one-to-one relationship with the User model. Indicates the user that this profile belongs to. |
+| name           | String        | The real name of the user. Optional.                                                         |
+| bio            | Text          | A short bio about the user. Optional.                                                        |
+| created_at     | DateTime      | The date and time when the profile was created. Automatically set on creation.               |
+| updated_at     | DateTime      | The date and time when the profile was last updated. Automatically updated on save.          |
+| profile_image  | Image         | The profile image of the user. Defaults to a placeholder image if not provided.              |
+| cover_image    | Image         | The cover image for the user's profile. Defaults to a placeholder image if not provided.     |
+| display_name   | Boolean       | Indicates whether to display the real name on the profile. Defaults to `False`.              |
+
+The Profile model is automatically created for each new user using a signal that triggers on user creation.
+
+**Followers Model**
+
+The Follower model represents a follower relationship between two users in the FitTribe application. Below is a detailed table outlining the attributes of the Follower model:
+
+| Attribute  | Type       | Description                                                                                           |
+|------------|------------|-------------------------------------------------------------------------------------------------------|
+| owner      | Foreign Key| The user who is following another user. This is a ForeignKey linking to the User model with the related name 'following'. |
+| followed   | Foreign Key| The user who is being followed. This is a ForeignKey linking to the User model with the related name 'followed'. |
+| created_at | DateTime   | The date and time when the follow relationship was created. Automatically set on creation.             |
+
+The Follower model includes metadata to ensure the uniqueness of follower-followed relationships and to provide human-readable names for the model:
+
+- **ordering**: Orders follower records by creation date in descending order.
+- **unique_together**: Ensures that a follower-followed relationship is unique.
+- **verbose_name**: Adds a readable name for the model in singular form.
+- **verbose_name_plural**: Adds a readable name for the model in plural form.
+
+**Blogs Model**
+
+The Blog model represents a blog post created by a user in the FitTribe application. Below is a detailed table outlining the attributes of the Blog model:
+
+| Attribute  | Type       | Description                                                                                           |
+|------------|------------|-------------------------------------------------------------------------------------------------------|
+| owner      | Foreign Key| The user who owns the blog post. This is a ForeignKey linking to the User model.                      |
+| title      | CharField  | The title of the blog post.                                                                           |
+| content    | TextField  | The content of the blog post.                                                                         |
+| created_at | DateTime   | The date and time when the blog post was created. Automatically set on creation.                      |
+| updated_at | DateTime   | The date and time when the blog post was last updated. Automatically set on update.                   |
+| banner     | ImageField | Optional banner image for the blog post, with a default image.                                        |
+| image      | ImageField | Optional content image for the blog post, with a default image set for consistent referencing.        |
+
+The Blog model includes metadata to ensure proper ordering and representation of the blog posts:
+
+- **ordering**: Blog posts are ordered by creation date, with the newest posts appearing first.
+
+**Blog Likes Model**
+
+The BlogLike model represents a like given by a user to a blog post in the FitTribe application. Below is a detailed table outlining the attributes of the BlogLike model:
+
+| Attribute  | Type       | Description                                                                                        |
+|------------|------------|----------------------------------------------------------------------------------------------------|
+| owner      | Foreign Key| The user who likes the blog post. This is a ForeignKey linking to the User model.                  |
+| blog       | Foreign Key| The blog post that is liked. This is a ForeignKey linking to the Blog model with a related name of 'blog_likes'. |
+| created_at | DateTime   | The date and time when the like was created. Automatically set on creation.                        |
+
+The BlogLike model includes metadata to ensure proper ordering and uniqueness:
+
+- **ordering**: Blog likes are ordered by creation date, with the newest likes appearing first.
+- **unique_together**: Ensures that a user can like a specific blog post only once.
+
+**Blog Comments Model**
+
+The Blog Comment model represents a comment made by a user on a blog post in the FitTribe application. Below is a detailed table outlining the attributes of the Blog Comment model:
+
+| Attribute  | Type       | Description                                                                                       |
+|------------|------------|---------------------------------------------------------------------------------------------------|
+| owner      | Foreign Key| The user who made the comment. This is a ForeignKey linking to the User model.                    |
+| blog       | Foreign Key| The blog post that is commented on. This is a ForeignKey linking to the Blog model.               |
+| comment    | TextField  | The text content of the comment.                                                                  |
+| created_at | DateTime   | The date and time when the comment was created. Automatically set on creation.                    |
+| updated_at | DateTime   | The date and time when the comment was last updated. Automatically set on update.                 |
+
+The Blog Comment model includes metadata to ensure proper ordering:
+
+- **ordering**: Blog comments are ordered by creation date, with the newest comments appearing first.
+
+**Workouts Model**
+
+The Workout model represents a workout session created by a user in the FitTribe application. Below is a detailed table outlining the attributes of the Workout model:
+
+| Attribute  | Type       | Description                                                                                       |
+|------------|------------|---------------------------------------------------------------------------------------------------|
+| owner      | Foreign Key| The user who owns the workout session. This is a ForeignKey linking to the User model.            |
+| title      | CharField  | The title of the workout session.                                                                 |
+| content    | TextField  | The detailed description or content of the workout session.                                       |
+| created_at | DateTime   | The date and time when the workout session was created. Automatically set on creation.            |
+| updated_at | DateTime   | The date and time when the workout session was last updated. Automatically set on update.         |
+| banner     | ImageField | Optional banner image for the workout session, with a default image.                              |
+| image      | ImageField | Optional content image for the workout session, with a default image.                             |
+
+The Workout model includes metadata to ensure proper ordering:
+
+- **ordering**: Workout sessions are ordered by creation date, with the newest sessions appearing first.
+
+**Workout Item Model**
+
+The Workout Item model represents individual exercises or components of a workout session in the FitTribe application. Below is a detailed table outlining the attributes of the Workout Item model:
+
+| Attribute     | Type         | Description                                                                                       |
+|---------------|--------------|---------------------------------------------------------------------------------------------------|
+| workout       | Foreign Key  | The workout session that the exercise belongs to. This is a ForeignKey linking to the Workout model. |
+| exercise_name | CharField    | The name of the exercise.                                                                         |
+| quantity      | IntegerField | The quantity or amount of the exercise performed.                                                 |
+
+**Workout Likes Model**
+
+The WorkoutLike model represents a like given by a user to a workout session in the FitTribe application. Below is a detailed table outlining the attributes of the WorkoutLike model:
+
+| Attribute  | Type       | Description                                                                                       |
+|------------|------------|---------------------------------------------------------------------------------------------------|
+| owner      | Foreign Key| The user who liked the workout session. This is a ForeignKey linking to the User model.           |
+| workout    | Foreign Key| The workout session that was liked. This is a ForeignKey linking to the Workout model.            |
+| created_at | DateTime   | The date and time when the like was created. Automatically set on creation.                       |
+
+The WorkoutLike model includes metadata to ensure proper ordering and uniqueness:
+
+- **ordering**: Likes are ordered by creation date, with the newest likes appearing first.
+- **unique_together**: Ensures that a user can only like a specific workout session once.
+
+**Workouts Comments Model**
+
+The WorkoutComment model represents a comment made by a user on a workout session in the FitTribe application. Below is a detailed table outlining the attributes of the WorkoutComment model:
+
+| Attribute  | Type       | Description                                                                                       |
+|------------|------------|---------------------------------------------------------------------------------------------------|
+| owner      | Foreign Key| The user who made the comment. This is a ForeignKey linking to the User model.                    |
+| workout    | Foreign Key| The workout session that the comment pertains to. This is a ForeignKey linking to the Workout model.|
+| comment    | TextField  | The text content of the comment.                                                                  |
+| created_at | DateTime   | The date and time when the comment was created. Automatically set on creation.                    |
+| updated_at | DateTime   | The date and time when the comment was last updated. Automatically set on update.                 |
+
+The WorkoutComment model includes metadata to ensure proper ordering:
+
+- **ordering**: Comments are ordered by creation date, with the newest comments appearing first.
+
+**Groups Model**
+
+The Group model represents a fitness group in the application. Below is a detailed table outlining the attributes of the Group model:
+
+| Attribute   | Type           | Description                                                                                      |
+|-------------|----------------|--------------------------------------------------------------------------------------------------|
+| name        | CharField      | The name of the group.                                                                           |
+| members     | ManyToManyField| The users who are members of the group, linked through the Membership model.                      |
+| description | TextField      | A description of the group.                                                                      |
+| updated_at  | DateTime       | The date and time when the group was last updated. Automatically set on update.                  |
+| created_at  | DateTime       | The date and time when the group was created. Automatically set on creation.                     |
+| banner      | ImageField     | An optional banner image for the group, with a default image.                                    |
+| group_logo  | ImageField     | An optional logo image for the group, with a default image.                                      |
+
+The Group model includes metadata to ensure proper ordering and naming:
+
+- **ordering**: Groups are ordered by creation date, with the newest groups appearing first.
+- **verbose_name**: Readable name for the model in singular form.
+- **verbose_name_plural**: Readable name for the model in plural form.
+
+**Membership Model**
+
+The Membership model represents the relationship between a user and a group. Below is a detailed table outlining the attributes of the Membership model:
+
+| Attribute  | Type        | Description                                                             |
+|------------|-------------|-------------------------------------------------------------------------|
+| user       | ForeignKey  | The user who is a member of the group. This links to the User model.    |
+| group      | ForeignKey  | The group the user is a member of. This links to the Group model.       |
+| joined_at  | DateTime    | The date and time when the user joined the group. Automatically set on creation.|
+
+**Group Events Model**
+
+The GroupEvent model represents events within groups that users can join. Below is a detailed table outlining the attributes of the GroupEvent model:
+
+| Attribute    | Type          | Description                                                                                   |
+|--------------|---------------|-----------------------------------------------------------------------------------------------|
+| group        | ForeignKey    | The parent group to which the event belongs. Links to the Group model.                        |
+| name         | CharField     | The name of the event.                                                                        |
+| description  | TextField     | A detailed description of the event.                                                          |
+| location     | CharField     | The location where the event will take place.                                                 |
+| start_time   | DateTimeField | The start date and time of the event.                                                         |
+| end_time     | DateTimeField | The end date and time of the event.                                                           |
+| banner       | ImageField    | An optional banner image for the event.                                                       |
+| created_at   | DateTimeField | The date and time when the event was created. Automatically set on creation.                  |
+| updated_at   | DateTimeField | The date and time when the event was last updated. Automatically set on update.               |
+
+The GroupEvent model includes metadata to ensure proper ordering and naming:
+
+- **ordering**: Events are ordered by start time, with the nearest upcoming events appearing first.
+- **verbose_name**: Readable name for the model in singular form.
+- **verbose_name_plural**: Readable name for the model in plural form.
+
+
 ### Future Features
 
 ### Languages
