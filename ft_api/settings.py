@@ -66,7 +66,8 @@ DEBUG = 'DEV' in os.environ
 ALLOWED_HOSTS = [
     'localhost',
     os.environ.get('ALLOWED_HOST'),
-    '127.0.0.1']
+    '127.0.0.1'
+]
 
 
 # Application definition
@@ -103,7 +104,9 @@ INSTALLED_APPS = [
     'group_events',
     'feed',
 ]
+
 SITE_ID = 1
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -122,7 +125,8 @@ if 'CLIENT_ORIGIN' in os.environ:
 
 if 'CLIENT_ORIGIN_DEV' in os.environ:
     extracted_url = re.match(
-        r'^https?://[^/]+', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE
+        r'^https?://[^/]+', os.environ.get('CLIENT_ORIGIN_DEV', ''),
+        re.IGNORECASE
     ).group(0)
     CORS_ALLOWED_ORIGIN_REGEXES = [
         rf"{extracted_url}.*"
@@ -160,16 +164,16 @@ WSGI_APPLICATION = 'ft_api.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 if 'DEV' in os.environ:
-     DATABASES = {
-         'default': {
-             'ENGINE': 'django.db.backends.sqlite3',
-             'NAME': BASE_DIR / 'db.sqlite3',
-         }
-     }
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 else:
-     DATABASES = {
-         'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-     }
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    }
 
 
 # Password validation
