@@ -435,6 +435,8 @@ These tools and technologies collectively contributed to the efficient developme
 
 ### Testing & Validation
 
+Please refer to the [TESTING.md](TESTING.md) file for comprehensive details on all the testing and validation processes undertaken.
+
 ### Bugs & Fixes
 
 ### Deployment
