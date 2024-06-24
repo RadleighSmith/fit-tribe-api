@@ -6,6 +6,7 @@ from .models import Workout
 from .serializers import WorkoutSerializer
 from ft_api.permissions import IsOwnerOrReadOnly
 
+
 class WorkoutList(generics.ListCreateAPIView):
     """
     API view to retrieve list of workouts or create a new workout.
