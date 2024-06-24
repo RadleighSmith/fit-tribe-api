@@ -5,6 +5,7 @@ from .models import Blog
 from .serializers import BlogSerializer
 from ft_api.permissions import IsOwnerOrReadOnly
 
+
 class BlogList(generics.ListCreateAPIView):
     """
     API view to retrieve list of blogs or create a new blog.
@@ -21,7 +22,7 @@ class BlogList(generics.ListCreateAPIView):
         filters.SearchFilter,
         DjangoFilterBackend,
     ]
-    
+
     filterset_fields = [
         'owner__followed__owner__profile',
         'blog_likes__owner__profile',
