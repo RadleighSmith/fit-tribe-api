@@ -1,11 +1,9 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.db import IntegrityError, DatabaseError
 from .models import Group, Membership
 from .serializers import GroupSerializer, MembershipSerializer
 from ft_api.permissions import IsAdminOrReadOnly
-from django.db import IntegrityError
-
 
 class GroupList(generics.ListCreateAPIView):
     """
@@ -13,9 +11,6 @@ class GroupList(generics.ListCreateAPIView):
 
     - GET: Returns a list of all groups.
     - POST: Allows an admin user to create a new group.
-
-    The perform_create method associates the current logged-in user
-    with the group.
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
@@ -23,7 +18,6 @@ class GroupList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save()
-
 
 class GroupDetail(generics.RetrieveUpdateDestroyAPIView):
     """
@@ -34,13 +28,10 @@ class GroupDetail(generics.RetrieveUpdateDestroyAPIView):
       the user is an admin).
     - DELETE: Delete a specific group (only allowed if the user is
       an admin).
-
-    Update operation is allowed to modify the group's details.
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [IsAdminOrReadOnly]
-
 
 class JoinGroup(generics.GenericAPIView):
     """
@@ -54,18 +45,24 @@ class JoinGroup(generics.GenericAPIView):
     def post(self, request, pk):
         try:
             group = self.get_object()
+            if Membership.objects.filter(
+                    user=request.user, group=group).exists():
+                return Response(
+                    {'error': 'Already a member of this group'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
             Membership.objects.create(user=request.user, group=group)
             return Response({'status': 'joined'}, status=status.HTTP_200_OK)
         except Group.DoesNotExist:
             return Response(
-                {'error': 'Group not found'}, status=status.HTTP_404_NOT_FOUND
+                {'error': 'Group not found'},
+                status=status.HTTP_404_NOT_FOUND
             )
-        except IntegrityError:
+        except DatabaseError as e:
             return Response(
-                {'error': 'Already a member of this group'},
-                status=status.HTTP_400_BAD_REQUEST
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-
 
 class LeaveGroup(generics.GenericAPIView):
     """
@@ -79,15 +76,34 @@ class LeaveGroup(generics.GenericAPIView):
     def post(self, request, pk):
         try:
             group = self.get_object()
-            membership = Membership.objects.get(user=request.user, group=group)
+            membership = Membership.objects.get(
+                user=request.user, group=group)
             membership.delete()
             return Response({'status': 'left'}, status=status.HTTP_200_OK)
         except Group.DoesNotExist:
             return Response(
-                {'error': 'Group not found'}, status=status.HTTP_404_NOT_FOUND
+                {'error': 'Group not found'},
+                status=status.HTTP_404_NOT_FOUND
             )
         except Membership.DoesNotExist:
             return Response(
                 {'error': 'Not a member of this group'},
                 status=status.HTTP_400_BAD_REQUEST
             )
+        except DatabaseError as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+class MembershipList(generics.ListAPIView):
+    """
+    API view to list memberships of the current user.
+
+    - GET: Returns a list of memberships for the current user.
+    """
+    serializer_class = MembershipSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Membership.objects.filter(user=self.request.user)
