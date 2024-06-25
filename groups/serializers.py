@@ -27,6 +27,25 @@ class GroupSerializer(serializers.ModelSerializer):
         queryset=User.objects.all(), many=True, required=False)
     memberships = MembershipSerializer(
         source='membership_set', many=True, read_only=True)
+    is_member = serializers.SerializerMethodField()
+
+    def get_is_member(self, obj):
+        """
+        Determine if the current user is a member of the group.
+
+        Args:
+            obj (Group): The group object being serialized.
+
+        Returns:
+            bool: True if the current user is a member of the group,
+                False otherwise.
+        """
+        request = self.context.get('request', None)
+        if request is not None and request.user.is_authenticated:
+            return Membership.objects.filter(
+                user=request.user, group=obj
+            ).exists()
+        return False
 
     def validate_banner(self, value):
         """
@@ -118,5 +137,5 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = [
             'id', 'name', 'description', 'updated_at', 'created_at',
-            'banner', 'group_logo', 'members', 'memberships'
+            'banner', 'group_logo', 'members', 'memberships', 'is_member'
         ]
