@@ -1,4 +1,5 @@
-from rest_framework import generics, permissions, filters
+from rest_framework import generics, permissions, filters, status
+from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Count
 from .models import Profile
@@ -64,3 +65,10 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
         Adds the request context to the serializer context.
         """
         return {'request': self.request}
+
+    def delete(self, request, *args, **kwargs):
+        profile = self.get_object()
+        user = profile.user
+        self.perform_destroy(profile)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
