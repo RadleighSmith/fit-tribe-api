@@ -43,13 +43,14 @@ class ProfileList(generics.ListAPIView):
         return {'request': self.request}
 
 
-class ProfileDetail(generics.RetrieveUpdateAPIView):
+class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    API view to retrieve or update a profile.
+    API view to retrieve, update, or delete a profile.
 
     - GET: Retrieve details of a specific profile.
     - PUT: Update the details of a specific profile (only allowed if the user
       is the owner).
+    - DELETE: Delete the profile and the associated user.
     """
     queryset = Profile.objects.annotate(
         blogs_count=Count('owner__blog', distinct=True),
@@ -67,8 +68,11 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
         return {'request': self.request}
 
     def delete(self, request, *args, **kwargs):
+        """
+        Handle deletion of the profile and the associated user.
+        """
         profile = self.get_object()
-        user = profile.user
-        self.perform_destroy(profile)
+        user = profile.owner
+        profile.delete()
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
