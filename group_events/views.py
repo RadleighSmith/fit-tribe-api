@@ -1,9 +1,9 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
+from django.db import IntegrityError, DatabaseError
 from .models import GroupEvent, EventMembership
-from .serializers import GroupEventSerializer, EventMembershipSerializer
+from .serializers import GroupEventSerializer
 from ft_api.permissions import IsAdminOrReadOnly
-
 
 class GroupEventList(generics.ListCreateAPIView):
     """
@@ -16,7 +16,7 @@ class GroupEventList(generics.ListCreateAPIView):
     permission_classes = [IsAdminOrReadOnly]
 
     def get_queryset(self):
-        group_id = self.request.query_params.get('group_id', None)
+        group_id = self.request.query_params.get('group')
         if group_id:
             return GroupEvent.objects.filter(group_id=group_id)
         return GroupEvent.objects.all()
@@ -31,9 +31,9 @@ class GroupEventDetail(generics.RetrieveUpdateDestroyAPIView):
 
     - GET: Retrieve details of a specific group event.
     - PUT: Update the details of a specific group event (only allowed if
-           the user is an admin).
+      the user is an admin).
     - DELETE: Delete a specific group event (only allowed if the user is
-              an admin).
+      an admin).
     """
     queryset = GroupEvent.objects.all()
     serializer_class = GroupEventSerializer
@@ -47,24 +47,21 @@ class JoinEvent(generics.GenericAPIView):
     - POST: Adds the current user to the event members.
     """
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = EventMembershipSerializer
+    queryset = GroupEvent.objects.all()
 
     def post(self, request, pk):
         try:
-            event = GroupEvent.objects.get(pk=pk)
-            if EventMembership.objects.filter(
-                user=request.user, event=event
-            ).exists():
-                return Response(
-                    {'error': 'Already joined this event.'},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
+            event = self.get_object()
             EventMembership.objects.create(user=request.user, event=event)
             return Response({'status': 'joined'}, status=status.HTTP_200_OK)
         except GroupEvent.DoesNotExist:
             return Response(
-                {'error': 'Event not found.'},
-                status=status.HTTP_404_NOT_FOUND
+                {'error': 'Event not found'}, status=status.HTTP_404_NOT_FOUND
+            )
+        except IntegrityError:
+            return Response(
+                {'error': 'Already a member of this event'},
+                status=status.HTTP_400_BAD_REQUEST
             )
 
 
@@ -75,23 +72,25 @@ class LeaveEvent(generics.GenericAPIView):
     - POST: Removes the current user from the event members.
     """
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = EventMembershipSerializer
+    queryset = GroupEvent.objects.all()
 
     def post(self, request, pk):
         try:
-            event = GroupEvent.objects.get(pk=pk)
-            membership = EventMembership.objects.get(
-                user=request.user, event=event
-            )
+            event = self.get_object()
+            membership = EventMembership.objects.get(user=request.user, event=event)
             membership.delete()
             return Response({'status': 'left'}, status=status.HTTP_200_OK)
         except GroupEvent.DoesNotExist:
             return Response(
-                {'error': 'Event not found.'},
-                status=status.HTTP_404_NOT_FOUND
+                {'error': 'Event not found'}, status=status.HTTP_404_NOT_FOUND
             )
         except EventMembership.DoesNotExist:
             return Response(
-                {'error': 'Not a member of this event.'},
+                {'error': 'Not a member of this event'},
                 status=status.HTTP_400_BAD_REQUEST
+            )
+        except DatabaseError as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
