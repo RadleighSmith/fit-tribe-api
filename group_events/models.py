@@ -18,7 +18,7 @@ class GroupEvent(models.Model):
         created_at (DateTimeField): The date and time when the event was
                                     created.
         updated_at (DateTimeField): The date and time when the event was last
-        updated.
+                                    updated.
     """
     group = models.ForeignKey(
         Group, on_delete=models.CASCADE, related_name='events'
@@ -41,3 +41,19 @@ class GroupEvent(models.Model):
 
     def __str__(self):
         return f'{self.name} ({self.group.name})'
+
+
+class EventMembership(models.Model):
+    """
+    Represents a membership of a user to a specific event.
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey(GroupEvent, on_delete=models.CASCADE)
+    joined_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'event')
+        ordering = ['-joined_at']
+
+    def __str__(self):
+        return f'{self.user.username} joined {self.event.name}'
