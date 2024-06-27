@@ -23,8 +23,6 @@ class GroupSerializer(serializers.ModelSerializer):
     This serializer validates the banner and group logo images to ensure
     they meet the specified size and dimension requirements.
     """
-    members = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all(), many=True, required=False)
     memberships = MembershipSerializer(
         source='membership_set', many=True, read_only=True)
     is_member = serializers.SerializerMethodField()
@@ -137,5 +135,5 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = [
             'id', 'name', 'description', 'updated_at', 'created_at',
-            'banner', 'group_logo', 'members', 'memberships', 'is_member'
+            'banner', 'group_logo', 'memberships', 'is_member'
         ]

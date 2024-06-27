@@ -40,6 +40,10 @@ class GroupDetail(generics.RetrieveUpdateDestroyAPIView):
         context.update({"request": self.request})
         return context
 
+    def perform_update(self, serializer):
+        serializer.validated_data.pop('members', None)
+        serializer.save()
+
 
 class JoinGroup(generics.GenericAPIView):
     """
