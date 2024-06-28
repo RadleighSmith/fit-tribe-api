@@ -20,9 +20,9 @@ class GroupEventSerializer(serializers.ModelSerializer):
     memberships = EventMembershipSerializer(
         source='eventmembership_set', many=True, read_only=True
     )
-    is_member = serializers.SerializerMethodField()
+    is_joined = serializers.SerializerMethodField()
 
-    def get_is_member(self, obj):
+    def get_is_joined(self, obj):
         """
         Determine if the current user is a member of the event.
 
@@ -56,7 +56,7 @@ class GroupEventSerializer(serializers.ModelSerializer):
             ImageField: The validated banner image.
         """
         if value is None:
-            return value 
+            return value
 
         max_size = 1024 * 1024 * 2  # 2 MB
         max_width = 4096
@@ -85,5 +85,5 @@ class GroupEventSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'group', 'name', 'description', 'location', 'start_time',
             'end_time', 'banner', 'created_at', 'updated_at', 'memberships',
-            'is_member'
+            'is_joined'
         ]

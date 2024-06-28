@@ -5,6 +5,7 @@ from .models import GroupEvent, EventMembership
 from .serializers import GroupEventSerializer
 from ft_api.permissions import IsAdminOrReadOnly
 
+
 class GroupEventList(generics.ListCreateAPIView):
     """
     API view to retrieve list of group events or create a new group event.
@@ -38,6 +39,11 @@ class GroupEventDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = GroupEvent.objects.all()
     serializer_class = GroupEventSerializer
     permission_classes = [IsAdminOrReadOnly]
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context
 
 
 class JoinEvent(generics.GenericAPIView):
@@ -77,7 +83,9 @@ class LeaveEvent(generics.GenericAPIView):
     def post(self, request, pk):
         try:
             event = self.get_object()
-            membership = EventMembership.objects.get(user=request.user, event=event)
+            membership = EventMembership.objects.get(
+                user=request.user, event=event
+            )
             membership.delete()
             return Response({'status': 'left'}, status=status.HTTP_200_OK)
         except GroupEvent.DoesNotExist:
