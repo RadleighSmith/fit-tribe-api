@@ -12,13 +12,15 @@ class GroupEvent(models.Model):
         name (CharField): The name of the event.
         description (TextField): A detailed description of the event.
         location (CharField): The location where the event will take place.
-        start_time (DateTimeField): The start date and time of the event.
-        end_time (DateTimeField): The end date and time of the event.
+        start_date (DateField): The start date of the event.
+        start_time (TimeField): The start time of the event.
+        end_date (DateField): The end date of the event.
+        end_time (TimeField): The end time of the event.
         banner (ImageField): An optional banner image for the event.
         created_at (DateTimeField): The date and time when the event was
                                     created.
-        updated_at (DateTimeField): The date and time when the event was last
-                                    updated.
+        updated_at (DateTimeField): The date and time when the event was
+                                    last updated.
     """
     group = models.ForeignKey(
         Group, on_delete=models.CASCADE, related_name='events'
@@ -26,8 +28,10 @@ class GroupEvent(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     location = models.CharField(max_length=255)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    start_date = models.DateField(default='2024-01-01')
+    start_time = models.TimeField(default='00:00:00')
+    end_date = models.DateField(default='2024-01-01')
+    end_time = models.TimeField(default='00:00:00')
     banner = models.ImageField(
         upload_to='event_banners/', blank=True, null=True
     )
@@ -35,7 +39,7 @@ class GroupEvent(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-start_time']
+        ordering = ['-start_date', '-start_time']
         verbose_name = 'Group Event'
         verbose_name_plural = 'Group Events'
 

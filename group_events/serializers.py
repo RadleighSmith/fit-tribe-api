@@ -83,7 +83,7 @@ class GroupEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = GroupEvent
         fields = [
-            'id', 'group', 'name', 'description', 'location', 'start_time',
-            'end_time', 'banner', 'created_at', 'updated_at', 'memberships',
-            'is_joined'
+            'id', 'group', 'name', 'description', 'location', 'start_date',
+            'start_time', 'end_date', 'end_time', 'banner', 'created_at',
+            'updated_at', 'memberships', 'is_joined'
         ]
