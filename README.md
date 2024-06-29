@@ -24,7 +24,7 @@ Live links:
 1. [**Features**](#features)
     * [Current Features](#current-features)
         * [Security](#security)
-        * [MODELS GO HERE](#modles-go-here)
+        * [Models](#models)
     * [Future Features](#future-features)   
 
 1. [Languages](#languages)
@@ -79,7 +79,7 @@ The FitTribe API was developed using Agile methodology, emphasizing flexibility,
 
 ### Current Features
 
-**Security**
+#### Security
 
 The FitTribe API ensures a high level of security by restricting access to most endpoints to authenticated users only. This section details the security measures implemented to safeguard user data and ensure proper authorization.
 
