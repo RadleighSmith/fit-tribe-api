@@ -539,4 +539,44 @@ To protect the main branch while working on new features or experiments, create 
 
 ### Credits
 
+I revisited Code Institute's 'Django Rest Framework' module for guidance and inspiration. Specifically, I drew from the posts, comments, likes, and JWT sections to inform and enhance the development of my own features. This helped ensure that my implementation adhered to best practices and leveraged proven patterns for handling similar functionalities.
+
+I frequently referred to the official Django Rest Framework documentation for deeper insights and advanced techniques. The documentation provided comprehensive information and examples, which were invaluable in refining my understanding and ensuring robust implementations. For more details, you can visit the Django Rest Framework documentation [here](https://www.django-rest-framework.org/).
+
+
+**Image Credits:**
+
+| File name                       | Author        | Link                                                                                                    |
+|---------------------------------|---------------|---------------------------------------------------------------------------------------------------------|
+| cover_image_background_default  | Kelly Sikkema | [Unsplash.com](https://unsplash.com/photos/orange-and-black-usb-cable-on-brown-wooden-surface-IZOAOjvwhaM) |
+
+**Specific Documentation Help:**
+
+| Documentation Help | Link                                                                                               |
+|-----------|----------------------------------------------------------------------------------------------------|
+| For helping understand nested relationships for the workout items list | [django-rest-framework.org](https://www.django-rest-framework.org/api-guide/relations/#nested-relationships) |
+
+
+
+
 ### Acknowledgements
+
+- **Code Institute**
+
+   A heartfelt thank you goes out to the entire team at Code Institute for igniting my passion and guiding me on the path to becoming a proficient full-stack software developer. Their meticulously crafted lessons and unwavering support have been instrumental in shaping my journey, and I am deeply grateful for their dedication.
+
+- **Code Institute Student Care Team**
+
+   This project has been my most challenging endeavor to date, with numerous ups and downs along the way. Despite my aspirations, it couldn't reach the full scale I initially envisioned. Fortunately, the Student Care team at Code Institute was there to support me at every turn. They provided invaluable assistance during the Gitpod/Code Institute migration issues, ensuring that I could continue progressing. Their unwavering support and dedication have been a cornerstone of my journey, and for that, I am profoundly grateful.
+
+- **Richard Wells - Code Institute Mentor**
+
+   I am immensely fortunate to have Richard as my mentor throughout this course. His guidance has been a beacon of light during challenging moments, ensuring I stay focused and empowered to overcome obstacles. I am truly indebted to him for his invaluable support and expertise.
+
+- **My Family**
+
+   I extend my heartfelt appreciation to my family for their unwavering support throughout this journey. Though they may not be versed in coding, their encouragement and willingness to assist have been indispensable in bringing this project to fruition.
+
+- **My Girlfriend, Ciara**
+
+   I am profoundly grateful to Ciara for her unwavering support since the inception of this course. Her patience, understanding, and unwavering belief in me have been the driving force behind my success so far.
