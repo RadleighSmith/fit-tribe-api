@@ -6,10 +6,10 @@ from .serializers import FollowerSerializer
 
 class FollowerList(generics.ListCreateAPIView):
     """
-    API view to retrieve list of followers or create a new follower
+    API view to retrieve the list of followers or create a new follower
     relationship.
 
-    - GET: Returns a list of all follower relationships.
+    - GET: Returns a list of follower relationships for the logged-in user.
     - POST: Allows a logged-in user to follow another user by creating a
       follower relationship.
 
@@ -17,8 +17,14 @@ class FollowerList(generics.ListCreateAPIView):
     follower relationship.
     """
     permission_classes = [permissions.IsAuthenticated]
-    queryset = Follower.objects.all()
     serializer_class = FollowerSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the followers for
+        the currently authenticated user.
+        """
+        return Follower.objects.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
