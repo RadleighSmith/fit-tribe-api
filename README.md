@@ -428,6 +428,14 @@ Please refer to the [TESTING.md](TESTING.md) file for comprehensive details on a
 
 ---
 
+| **Issue**        | The FollowingPage component in the frontend is displaying all followings instead of only the followings of the logged-in user. |
+|------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| **Cause**        | The component is fetching and displaying all follower relationships from the backend without filtering based on the current user's ID. |
+| **Fix**          | Updated the `FollowerList` view in the backend to filter the queryset to include only the follower relationships where the owner is the current logged-in user. Modified the `FollowingPage` component in the frontend to properly fetch and display only the followings of the authenticated user. |
+| **Outcome**      | The FollowingPage now correctly displays only the followings of the logged-in user, resolving the issue of displaying all followings. |
+
+---
+
 ### Deployment
 
 The FitTribe API is deployed using Heroku. Follow the instructions below to deploy the API on Heroku:
